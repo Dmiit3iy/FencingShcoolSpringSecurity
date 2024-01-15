@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 
 @Data
@@ -22,7 +21,7 @@ public class User {
 
     @NonNull
     @Column(unique = true)
-    private String login;
+    private String userName;
 
     @Column(nullable = false)
     @NonNull
@@ -30,10 +29,18 @@ public class User {
 
     @Column(nullable = false)
     @NonNull
-    private String name;
+    private String fio;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private LocalDate regDate = LocalDate.now();
+    @Column(nullable = false)
+    @NonNull
+    private boolean active;
 
+    public User(@NonNull String userName, @NonNull String password, @NonNull boolean active) {
+        this.userName = userName;
+        this.password = password;
+        this.active = active;
+    }
 }
