@@ -23,16 +23,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 public class ApprenticeController {
-    private TrainingRepository trainingRepository = new TrainingRepository();
-    private ApprenticeRepository apprenticeRepository = new ApprenticeRepository();
+    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+
+    private String login = preferences.get("userLogin", "-1");
+    private String password = preferences.get("userPassword", "-1");
+    private TrainingRepository trainingRepository = new TrainingRepository(login,password);
+    private ApprenticeRepository apprenticeRepository = new ApprenticeRepository(login,password);
     private List<Training> trainingArrayList = new ArrayList<>();
     public TextField textFieldSurname;
     public TextField textFieldName;
     public TextField textFieldPatronymic;
     public TextField textFieldPhone;
-    public ListView <Training> listViewTraining;
+    public ListView<Training> listViewTraining;
 
     private Apprentice apprentice;
 

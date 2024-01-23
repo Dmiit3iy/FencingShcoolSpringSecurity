@@ -15,7 +15,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/training")
+@RequestMapping(path = "FencingSchool/training")
 public class TrainingController {
     private TrainingsService trainingsService;
 

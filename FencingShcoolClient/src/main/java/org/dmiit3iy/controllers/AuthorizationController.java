@@ -27,11 +27,13 @@ public class AuthorizationController {
     public void buttonEnter(ActionEvent actionEvent) throws IOException {
         login = textFieldLogin.getText();
         password = textFieldPassword.getText();
-        userRepository = new UserRepository();
+        userRepository = new UserRepository(login,password);
         User user = null;
         try {
-            user = userRepository.get(login, password);
+            user = userRepository.get();
             pref.putLong("userID", user.getId());
+            pref.put("userLogin", user.getLogin());
+            pref.put("userPassword", user.getPassword());
             if (user != null) {
 
                 App.openWindow("main.fxml", "Main window", user);

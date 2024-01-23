@@ -24,12 +24,18 @@ import org.dmiit3iy.util.Constants;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 public class ScheduleController {
     public TableView<TrainerScheduleForTable> tableViewSchedule;
 
-    private ScheduleRepository scheduleRepository = new ScheduleRepository();
-    private TrainerRepository trainerRepository = new TrainerRepository();
+    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+
+    private String login = preferences.get("userLogin","-1");
+    private String password = preferences.get("userPassword", "-1");
+
+    private ScheduleRepository scheduleRepository = new ScheduleRepository(login,password);
+    private TrainerRepository trainerRepository = new TrainerRepository(login,password);
     private Trainer trainer;
     private TrainerSchedule trainerSchedule;
     @FXML

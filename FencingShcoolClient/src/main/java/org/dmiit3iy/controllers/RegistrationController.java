@@ -14,6 +14,7 @@ import org.dmiit3iy.model.User;
 import org.dmiit3iy.retrofit.UserRepository;
 
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class RegistrationController {
     UserRepository userRepository;
@@ -25,9 +26,14 @@ public class RegistrationController {
     @FXML
     public PasswordField textFieldPassword;
 
+    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+
+    private String login = preferences.get("userLogin","-1");
+    private String password = preferences.get("userPassword", "-1");
+
     @FXML
     public void buttonRegistration(ActionEvent actionEvent) {
-        userRepository = new UserRepository();
+        userRepository = new UserRepository(login,password);
         String login = textFieldLogin.getText();
         String password = textFieldPassword.getText();
         String name = textFieldName.getText();

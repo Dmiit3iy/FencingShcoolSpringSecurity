@@ -23,10 +23,10 @@ public class TrainingRepository {
     private ObjectMapper objectMapper;
     private TrainingService service;
 
-    public TrainingRepository() {
+    public TrainingRepository(String username, String password) {
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor(username, password)).build();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL + "training/")
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper)).client(client).build();
 

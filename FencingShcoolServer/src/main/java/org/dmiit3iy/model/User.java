@@ -23,24 +23,24 @@ public class User {
     @Column(unique = true)
     private String userName;
 
-    @Column(nullable = false)
-    @NonNull
+
     private String password;
 
-    @Column(nullable = false)
-    @NonNull
+
     private String fio;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private LocalDate regDate = LocalDate.now();
-    @Column(nullable = false)
-    @NonNull
-    private boolean active;
 
-    public User(@NonNull String userName, @NonNull String password, @NonNull boolean active) {
+    private boolean active = true;
+
+
+    public User(String userName, String password, boolean active) {
         this.userName = userName;
         this.password = password;
         this.active = active;
     }
+
+
 }

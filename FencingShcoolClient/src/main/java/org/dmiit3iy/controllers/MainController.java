@@ -32,9 +32,13 @@ public class MainController implements ControllerData<User> {
     public ListView<Trainer> listViewTrainer;
     public ListView<Apprentice> listViewApprentice;
     private User user;
-    TrainerRepository trainerRepository = new TrainerRepository();
-    ApprenticeRepository apprenticeRepository = new ApprenticeRepository();
-    UserRepository userRepository = new UserRepository();
+    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+
+    private String login = preferences.get("userLogin","-1");
+    private String password = preferences.get("userPassword", "-1");
+    TrainerRepository trainerRepository = new TrainerRepository(login,password);
+    ApprenticeRepository apprenticeRepository = new ApprenticeRepository(login,password);
+    UserRepository userRepository = new UserRepository(login,password);
     private Preferences pref = Preferences.userNodeForPackage(App.class);
 
     public void initData(User user) {

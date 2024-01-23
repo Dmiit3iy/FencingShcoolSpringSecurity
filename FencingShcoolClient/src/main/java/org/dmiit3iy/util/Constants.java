@@ -3,7 +3,7 @@ package org.dmiit3iy.util;
 import java.util.HashMap;
 
 public class Constants {
-    public static final String URL = "http://localhost:8080/";
+    public static final String URL = "http://localhost:8080/FencingSchool/";
     public static final String[] dayWeekEng
             = new String[]{"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
     public static final String[] dayWeekRus

@@ -14,10 +14,12 @@ import javafx.stage.WindowEvent;
 import org.dmiit3iy.App;
 import org.dmiit3iy.model.Apprentice;
 import org.dmiit3iy.model.Trainer;
+import org.dmiit3iy.model.User;
 import org.dmiit3iy.retrofit.ApprenticeRepository;
 import org.dmiit3iy.retrofit.TrainerRepository;
 
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class AddController {
     @FXML
@@ -35,9 +37,15 @@ public class AddController {
     public RadioButton radButtonTrainer;
     @FXML
     public RadioButton radButtonApprentice;
+
+    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+
+   private String login = preferences.get("userLogin","-1");
+   private String password = preferences.get("userPassword", "-1");
+
     ToggleGroup group = new ToggleGroup();
-    TrainerRepository trainerRepository = new TrainerRepository();
-    ApprenticeRepository apprenticeRepository = new ApprenticeRepository();
+    TrainerRepository trainerRepository = new TrainerRepository(login,password);
+    ApprenticeRepository apprenticeRepository = new ApprenticeRepository(login,password);
 
     @FXML
     void initialize() {

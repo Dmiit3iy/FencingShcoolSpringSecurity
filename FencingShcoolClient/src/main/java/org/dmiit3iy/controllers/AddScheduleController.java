@@ -18,6 +18,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.prefs.Preferences;
 
 public class AddScheduleController {
     private TrainerSchedule trainerSchedule;
@@ -28,8 +29,11 @@ public class AddScheduleController {
     public ComboBox<LocalTime> comboBoxStartTime;
     @FXML
     public ComboBox<LocalTime> comboBoxEndTime;
+    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
 
-    ScheduleRepository scheduleRepository = new ScheduleRepository();
+    private String login = preferences.get("userLogin","-1");
+    private String password = preferences.get("userPassword", "-1");
+    ScheduleRepository scheduleRepository = new ScheduleRepository(login,password);
 
     public void buttonAddSchedule(ActionEvent actionEvent) throws IOException {
         if (comboBoxDays.getSelectionModel().getSelectedItem() != null && comboBoxEndTime.getSelectionModel().getSelectedItem() != null

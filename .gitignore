@@ -1,2 +1,5 @@
 /FencingShcoolServer/target/
 /FencingShcoolServer/out/
+FencingShcoolClient/.idea
+FencingShcoolClient/target
+FencingShcoolServer/.idea

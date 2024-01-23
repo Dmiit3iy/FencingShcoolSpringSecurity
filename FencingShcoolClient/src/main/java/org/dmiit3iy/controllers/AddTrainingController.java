@@ -21,6 +21,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
 public class AddTrainingController {
@@ -29,10 +30,16 @@ public class AddTrainingController {
     public DatePicker datePicker;
     public ComboBox comboBoxTrainer;
     private Trainer trainer;
-    private ScheduleRepository scheduleRepository = new ScheduleRepository();
 
-    private TrainingRepository trainingRepository = new TrainingRepository();
-    private TrainerRepository trainerRepository = new TrainerRepository();
+    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+
+    private String login = preferences.get("userLogin","-1");
+    private String password = preferences.get("userPassword", "-1");
+
+    private ScheduleRepository scheduleRepository = new ScheduleRepository(login,password);
+
+    private TrainingRepository trainingRepository = new TrainingRepository(login,password);
+    private TrainerRepository trainerRepository = new TrainerRepository(login,password);
     private Apprentice apprentice;
 
     public void buttonAddTraining(ActionEvent actionEvent) {

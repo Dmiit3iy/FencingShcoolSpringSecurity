@@ -18,10 +18,13 @@ public class UserRepository {
     private ObjectMapper objectMapper;
     private UserService service;
 
-    public UserRepository() {
+
+
+    public UserRepository(String username, String password) {
+
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor(username, password)).build();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL + "user/")
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper)).client(client).build();
 
@@ -47,11 +50,16 @@ public class UserRepository {
     }
 
 
-
-    public User get(String login, String password) throws IOException {
-        Response<ResponseResult<User>> execute = service.getByLoginAndPassword(login, password).execute();
+    public User get() throws IOException {
+        Response<ResponseResult<User>> execute = service.get().execute();
         return getData(execute);
     }
+
+
+//    public User get(String login, String password) throws IOException {
+//        Response<ResponseResult<User>> execute = service.getByLoginAndPassword(login, password).execute();
+//        return getData(execute);
+//    }
 
     public User get(long id) throws IOException {
         Response<ResponseResult<User>> execute = service.get(id).execute();

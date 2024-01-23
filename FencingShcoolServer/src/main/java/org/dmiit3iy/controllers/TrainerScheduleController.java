@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalTime;
 
 @RestController
-@RequestMapping("/schedule")
+@RequestMapping("FencingSchool/schedule")
 public class TrainerScheduleController {
     private TrainerScheduleService trainerScheduleService;
 

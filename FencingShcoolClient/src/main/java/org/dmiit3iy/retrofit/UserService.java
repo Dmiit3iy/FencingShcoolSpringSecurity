@@ -8,8 +8,10 @@ import retrofit2.http.*;
 import java.util.List;
 
 public interface UserService {
-    @GET(".")
-    Call<ResponseResult<User>> getByLoginAndPassword(@Query("login") String login, @Query("password") String password);
+//    @GET(".")
+//    Call<ResponseResult<User>> getByLoginAndPassword(@Query("login") String login, @Query("password") String password);
+    @GET
+    Call<ResponseResult<User>> get();
 
     @GET("{id}")
     Call<ResponseResult<User>> get(@Path("id") long id);
