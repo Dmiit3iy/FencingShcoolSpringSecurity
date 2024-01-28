@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserService {
 //    @GET(".")
 //    Call<ResponseResult<User>> getByLoginAndPassword(@Query("login") String login, @Query("password") String password);
-    @GET
+    @GET(".")
     Call<ResponseResult<User>> get();
 
     @GET("{id}")
@@ -21,6 +21,8 @@ public interface UserService {
 
     @POST(".")
     Call<ResponseResult<User>> post (@Body User user);
+//    @POST(".")
+//    Call<ResponseResult<User>> post (@Header("Authorization") String credentials,@Body User user);
 }
 
 

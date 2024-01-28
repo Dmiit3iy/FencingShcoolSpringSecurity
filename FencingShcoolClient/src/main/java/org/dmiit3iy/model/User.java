@@ -17,14 +17,14 @@ public class User {
     private long id;
 
     @NonNull
-    private String login;
+    private String userName;
 
     @NonNull
     private String password;
 
 
     @NonNull
-    private String name;
+    private String fio;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate regDate = LocalDate.now();

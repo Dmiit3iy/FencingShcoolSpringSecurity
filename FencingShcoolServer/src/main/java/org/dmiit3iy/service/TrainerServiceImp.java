@@ -4,6 +4,7 @@ import org.dmiit3iy.model.Trainer;
 import org.dmiit3iy.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class TrainerServiceImp implements TrainerService {
 
     @Override
     public List<Trainer> get() {
+
         return trainerRepository.findAll();
     }
 

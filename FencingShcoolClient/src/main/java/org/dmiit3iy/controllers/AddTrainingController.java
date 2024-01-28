@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import okhttp3.Credentials;
 import org.dmiit3iy.App;
 import org.dmiit3iy.model.Apprentice;
 import org.dmiit3iy.model.Trainer;
@@ -31,7 +32,7 @@ public class AddTrainingController {
     public ComboBox comboBoxTrainer;
     private Trainer trainer;
 
-    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+    Preferences preferences = Preferences.userRoot().node("fencing");
 
     private String login = preferences.get("userLogin","-1");
     private String password = preferences.get("userPassword", "-1");

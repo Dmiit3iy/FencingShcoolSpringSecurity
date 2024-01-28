@@ -29,11 +29,11 @@ public class AddScheduleController {
     public ComboBox<LocalTime> comboBoxStartTime;
     @FXML
     public ComboBox<LocalTime> comboBoxEndTime;
-    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+    Preferences preferences = Preferences.userRoot().node("fencing");
 
-    private String login = preferences.get("userLogin","-1");
+    private String login = preferences.get("userLogin", "-1");
     private String password = preferences.get("userPassword", "-1");
-    ScheduleRepository scheduleRepository = new ScheduleRepository(login,password);
+    ScheduleRepository scheduleRepository = new ScheduleRepository(login, password);
 
     public void buttonAddSchedule(ActionEvent actionEvent) throws IOException {
         if (comboBoxDays.getSelectionModel().getSelectedItem() != null && comboBoxEndTime.getSelectionModel().getSelectedItem() != null

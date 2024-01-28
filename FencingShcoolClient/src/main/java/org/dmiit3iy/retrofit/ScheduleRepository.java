@@ -3,6 +3,7 @@ package org.dmiit3iy.retrofit;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import org.dmiit3iy.dto.ResponseResult;
 import org.dmiit3iy.model.TrainerSchedule;
@@ -12,13 +13,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.prefs.Preferences;
 
 
 public class ScheduleRepository {
     private ObjectMapper objectMapper;
     private ScheduleService service;
 
-    public ScheduleRepository(String username, String password) {
+    public ScheduleRepository(String username,String password) {
+
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor(username, password)).build();

@@ -1,8 +1,10 @@
 package org.dmiit3iy.retrofit;
 
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import okhttp3.OkHttpClient;
 import org.dmiit3iy.dto.ResponseResult;
 import org.dmiit3iy.model.User;
@@ -12,24 +14,31 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
-import java.util.List;
+
 
 public class UserRepository {
     private ObjectMapper objectMapper;
     private UserService service;
 
 
-
     public UserRepository(String username, String password) {
-
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor(username, password)).build();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL + "user/")
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper)).client(client).build();
-
         this.service = retrofit.create(UserService.class);
     }
+
+    public UserRepository() {
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        OkHttpClient client = new OkHttpClient.Builder().build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL + "user/")
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).client(client).build();
+        this.service = retrofit.create(UserService.class);
+    }
+
 
     private <T> T getData(Response<ResponseResult<T>> execute) throws IOException {
         if (execute.code() != 200) {

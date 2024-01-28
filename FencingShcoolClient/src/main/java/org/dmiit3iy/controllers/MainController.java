@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import okhttp3.Credentials;
 import org.dmiit3iy.App;
 import org.dmiit3iy.model.Apprentice;
 import org.dmiit3iy.model.Trainer;
@@ -32,37 +33,47 @@ public class MainController implements ControllerData<User> {
     public ListView<Trainer> listViewTrainer;
     public ListView<Apprentice> listViewApprentice;
     private User user;
-    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+    private Preferences preferences;// = Preferences.userRoot().node("fencing");
+    private String login;// = preferences.get("userLogin","-1");
+    private String password; //= preferences.get("userPassword", "-1");
 
-    private String login = preferences.get("userLogin","-1");
-    private String password = preferences.get("userPassword", "-1");
-    TrainerRepository trainerRepository = new TrainerRepository(login,password);
-    ApprenticeRepository apprenticeRepository = new ApprenticeRepository(login,password);
-    UserRepository userRepository = new UserRepository(login,password);
-    private Preferences pref = Preferences.userNodeForPackage(App.class);
+    TrainerRepository trainerRepository;//= new TrainerRepository(login,password);
+    ApprenticeRepository apprenticeRepository;//= new ApprenticeRepository(login,password);
+    UserRepository userRepository;// = new UserRepository(login,password);
 
     public void initData(User user) {
         this.user = user;
-        labelGreetings.setText("Приветствую, " + user.getName() + "!");
+        labelGreetings.setText("Приветствую, " + user.getFio() + "!");
     }
 
     @FXML
     void initialize() {
 
+        preferences = Preferences.userRoot().node("fencing");
+        login = preferences.get("userLogin", "-1");
+        password = preferences.get("userPassword", "-1");
+
+        trainerRepository = new TrainerRepository(login, password);
+        apprenticeRepository = new ApprenticeRepository(login, password);
+        userRepository = new UserRepository(login, password);
+
+
         try {
             ObservableList<Trainer> trainersList = FXCollections.observableList(trainerRepository.get());
+            System.out.println(trainersList);
             this.listViewTrainer.setItems(trainersList);
 
             ObservableList<Apprentice> apprenticesList = FXCollections.observableList(apprenticeRepository.get());
+            System.out.println(apprenticesList);
             this.listViewApprentice.setItems(apprenticesList);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        long id = pref.getLong("userID", -1);
+        long id = preferences.getLong("userID", -1);
         System.out.println(id);
         try {
-            labelGreetings.setText("Приветствую, " + userRepository.get(id).getName() + "!");
+            labelGreetings.setText("Приветствую, " + userRepository.get(id).getFio() + "!");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +81,9 @@ public class MainController implements ControllerData<User> {
 
     @FXML
     public void buttonLogOff(ActionEvent actionEvent) {
-        pref.remove("userID");
+        preferences.remove("userID");
+        preferences.remove("userLogin");
+        preferences.remove("userPassword");
         try {
             App.openWindow("authorization.fxml", "", null);
         } catch (IOException e) {

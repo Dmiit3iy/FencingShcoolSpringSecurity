@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 public class ApprenticeController {
-    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
+    Preferences preferences = Preferences.userRoot().node("fencing");
 
     private String login = preferences.get("userLogin", "-1");
     private String password = preferences.get("userPassword", "-1");

@@ -18,7 +18,6 @@ import java.util.prefs.Preferences;
 
 public class RegistrationController {
     UserRepository userRepository;
-
     @FXML
     public TextField textFieldLogin;
     @FXML
@@ -26,14 +25,13 @@ public class RegistrationController {
     @FXML
     public PasswordField textFieldPassword;
 
-    Preferences preferences = Preferences.userNodeForPackage(Preferences.class);
-
-    private String login = preferences.get("userLogin","-1");
-    private String password = preferences.get("userPassword", "-1");
+    // Preferences preferences = Preferences.userRoot().node("fencing");
+//    private String login = preferences.get("userLogin","-1");
+//    private String password = preferences.get("userPassword", "-1");
 
     @FXML
     public void buttonRegistration(ActionEvent actionEvent) {
-        userRepository = new UserRepository(login,password);
+        userRepository = new UserRepository();
         String login = textFieldLogin.getText();
         String password = textFieldPassword.getText();
         String name = textFieldName.getText();

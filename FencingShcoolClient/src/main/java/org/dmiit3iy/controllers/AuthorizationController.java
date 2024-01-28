@@ -17,28 +17,29 @@ public class AuthorizationController {
     public TextField textFieldLogin;
     @FXML
     public TextField textFieldPassword;
-    private String login;
-    private String password;
+    Preferences preferences = Preferences.userRoot().node("fencing");
+    private String username=preferences.get("userLogin","-1");
+    private String password=preferences.get("userPassword", "-1");
     private UserRepository userRepository;
 
-    private Preferences pref = Preferences.userNodeForPackage(App.class);
+
 
     @FXML
     public void buttonEnter(ActionEvent actionEvent) throws IOException {
-        login = textFieldLogin.getText();
-        password = textFieldPassword.getText();
-        userRepository = new UserRepository(login,password);
-        User user = null;
         try {
-            user = userRepository.get();
-            pref.putLong("userID", user.getId());
-            pref.put("userLogin", user.getLogin());
-            pref.put("userPassword", user.getPassword());
+        username = textFieldLogin.getText();
+        password = textFieldPassword.getText();
+        userRepository = new UserRepository( username,password);
+        preferences.put("userLogin", username);
+        preferences.put("userPassword", password);
+        User user = null;
+        user = userRepository.get();
             if (user != null) {
-
+                preferences.putLong("userID", user.getId());
+                //preferences.put("userLogin", user.getUserName());
+              //  preferences.put("userPassword", user.getPassword());
                 App.openWindow("main.fxml", "Main window", user);
                 App.closeWindow(actionEvent);
-
             } else {
                 App.showMessage("Mistake", "Incorrect login or password", Alert.AlertType.ERROR);
             }

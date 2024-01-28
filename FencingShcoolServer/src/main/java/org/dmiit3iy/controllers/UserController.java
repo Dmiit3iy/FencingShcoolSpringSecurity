@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("FencingSchool/user")
+@RequestMapping("/FencingSchool/user")
 public class UserController {
     private UserService userService;
 
@@ -38,8 +38,7 @@ public class UserController {
             User user = userService.get(userDetails.getId());
             return new ResponseEntity<>(new ResponseResult<>(null, user), HttpStatus.OK);
         }
-        return null;
-
+        return new ResponseEntity<>(new ResponseResult<>("Ошибка аутентификации", null), HttpStatus.BAD_REQUEST);
     }
 
 //    @GetMapping

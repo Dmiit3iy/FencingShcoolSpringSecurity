@@ -7,6 +7,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
+
 public class BasicAuthInterceptor implements Interceptor {
 
     private String credentials;
@@ -22,4 +23,4 @@ public class BasicAuthInterceptor implements Interceptor {
                 .header("Authorization", credentials).build();
         return chain.proceed(authenticatedRequest);
     }
-}
+    }

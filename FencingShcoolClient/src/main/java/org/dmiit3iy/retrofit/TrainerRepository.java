@@ -1,8 +1,10 @@
 package org.dmiit3iy.retrofit;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import org.dmiit3iy.dto.ResponseResult;
 import org.dmiit3iy.model.Trainer;
@@ -11,17 +13,22 @@ import org.dmiit3iy.util.Constants;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.http.Header;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 public class TrainerRepository {
     private ObjectMapper objectMapper;
     private TrainerService service;
 
-    public TrainerRepository(String username, String password) {
+
+    public TrainerRepository(String username,String password) {
+
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor(username, password)).build();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL + "trainer/")
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper)).client(client).build();
@@ -42,6 +49,8 @@ public class TrainerRepository {
         return execute.body().getData();
     }
 
+
+
     public Trainer post(Trainer trainer) throws IOException {
         Response<ResponseResult<Trainer>> execute = this.service.post(trainer).execute();
         return getData(execute);
@@ -60,6 +69,7 @@ public class TrainerRepository {
 
     public List<Trainer> get() throws IOException {
         Response<ResponseResult<List<Trainer>>> execute = service.getAll().execute();
+        System.out.println(execute);
         return getData(execute);
     }
 

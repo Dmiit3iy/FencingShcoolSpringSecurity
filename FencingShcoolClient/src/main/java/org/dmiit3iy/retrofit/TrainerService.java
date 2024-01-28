@@ -14,8 +14,10 @@ public interface TrainerService {
 
     @GET(".")
     Call<ResponseResult<List<Trainer>>> getAll();
+//    @GET(".")
+//    Call<ResponseResult<List<Trainer>>> getAll();
 
-    @GET("/{id}")
+    @GET("{id}")
     Call<ResponseResult<Trainer>> getById(@Path("id") long id);
 
     @PUT(".")

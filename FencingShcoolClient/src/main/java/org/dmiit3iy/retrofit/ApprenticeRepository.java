@@ -3,6 +3,7 @@ package org.dmiit3iy.retrofit;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import org.dmiit3iy.dto.ResponseResult;
 import org.dmiit3iy.model.Apprentice;
@@ -13,14 +14,15 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 public class    ApprenticeRepository {
     private ObjectMapper objectMapper;
     private ApprenticeService service;
 
 
+    public ApprenticeRepository(String username,String password) {
 
-    public ApprenticeRepository(String username, String password) {
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor(username, password)).build();

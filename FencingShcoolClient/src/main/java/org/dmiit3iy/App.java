@@ -18,7 +18,7 @@ import java.util.prefs.Preferences;
  * JavaFX App
  */
 public class App extends Application {
-    private Preferences pref = Preferences.userNodeForPackage(App.class);
+    private Preferences pref =  Preferences.userRoot().node("fencing");
 
     private static Scene scene;
 
