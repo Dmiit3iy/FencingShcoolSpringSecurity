@@ -51,4 +51,15 @@ public class UserServiceImp implements UserService {
         userRepository.deleteById(id);
         return user;
     }
+
+    @Override
+    public User update(User user) {
+        User base = get(user.getId());
+        base.setPassword(user.getPassword());
+        base.setRoleList(user.getRoleList());
+        base.setFio(user.getFio());
+        base.setUserName(user.getUserName());
+
+        return this.userRepository.save(base);
+    }
 }

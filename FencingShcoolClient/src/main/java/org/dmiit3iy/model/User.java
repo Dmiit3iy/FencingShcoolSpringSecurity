@@ -5,6 +5,8 @@ import lombok.*;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -29,4 +31,5 @@ public class User {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate regDate = LocalDate.now();
 
+    private List<Role> roleList=new ArrayList<>();
 }

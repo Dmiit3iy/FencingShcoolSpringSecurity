@@ -79,4 +79,9 @@ public class UserRepository {
         Response<ResponseResult<User>> execute = service.delete(id).execute();
         return getData(execute);
     }
+
+    public User setRole(long id, String role) throws IOException {
+        Response<ResponseResult<User>> execute = service.patch(id,role).execute();
+        return getData(execute);
+    }
 }

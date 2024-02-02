@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     public void setUserDetailsService(UserDetailsService userDetailsService) {
@@ -30,8 +30,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/FencingSchool/user").permitAll()
                 .antMatchers(HttpMethod.POST, "/FencingSchool/user/").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/FencingSchool/user/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/FencingSchool/user/").permitAll()
+                .antMatchers(HttpMethod.POST,"/FencingSchool/trainer/").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/FencingSchool/trainer/**").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/FencingSchool/trainer/**").hasAnyRole("ADMIN","USER")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

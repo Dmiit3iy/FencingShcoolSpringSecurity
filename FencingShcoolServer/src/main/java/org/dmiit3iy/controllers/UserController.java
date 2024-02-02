@@ -1,8 +1,11 @@
 package org.dmiit3iy.controllers;
 
 import org.dmiit3iy.dto.ResponseResult;
+import org.dmiit3iy.model.Role;
 import org.dmiit3iy.model.User;
 import org.dmiit3iy.model.UserDetailsImp;
+import org.dmiit3iy.repository.RoleRepository;
+import org.dmiit3iy.service.RoleService;
 import org.dmiit3iy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/FencingSchool/user")
 public class UserController {
     private UserService userService;
+    private RoleService roleService;
+
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -55,6 +64,19 @@ public class UserController {
     public ResponseEntity<ResponseResult<User>> get(@PathVariable long id) {
         try {
             User user = this.userService.get(id);
+            return new ResponseEntity<>(new ResponseResult<>(null, user), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(new ResponseResult<>(e.getMessage(), null), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ResponseResult<User>> serRole(@PathVariable long id, @RequestParam String role) {
+        try {
+            User user = this.userService.get(id);
+            Role role1 = this.roleService.getByName(role);
+            user.addRole(role1);
+            userService.update(user);
             return new ResponseEntity<>(new ResponseResult<>(null, user), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(new ResponseResult<>(e.getMessage(), null), HttpStatus.BAD_REQUEST);

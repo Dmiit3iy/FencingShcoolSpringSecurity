@@ -37,7 +37,8 @@ public class RegistrationController {
         String name = textFieldName.getText();
         User user = new User(login, password, name);
         try {
-            userRepository.post(user);
+            User user1 = userRepository.post(user);
+            userRepository.setRole(user1.getId(), "ROLE_USER");
             App.showMessage("Success", "the user has been successfully registered", Alert.AlertType.INFORMATION);
             App.closeWindow(actionEvent);
             App.openWindow("authorization.fxml", "", null);

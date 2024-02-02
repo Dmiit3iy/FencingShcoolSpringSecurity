@@ -3,3 +3,5 @@
 FencingShcoolClient/.idea
 FencingShcoolClient/target
 FencingShcoolServer/.idea
+FencingShcoolServer/Req.http
+FencingShcoolClient/testReq.http

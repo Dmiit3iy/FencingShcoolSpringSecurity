@@ -21,6 +21,8 @@ public interface UserService {
 
     @POST(".")
     Call<ResponseResult<User>> post (@Body User user);
+    @PATCH("{id}")
+    Call<ResponseResult<User>> patch(@Path("id") long id, @Query("role") String role);
 //    @POST(".")
 //    Call<ResponseResult<User>> post (@Header("Authorization") String credentials,@Body User user);
 }
