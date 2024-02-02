@@ -1,5 +1,6 @@
 package org.dmiit3iy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
@@ -22,6 +23,7 @@ public class Role {
 
 
     @ManyToMany
+    @JsonIgnore
     @ToString.Exclude
     @Cascade(value = org.hibernate.annotations.CascadeType.DELETE)
     @JoinTable(name = "users_roles",

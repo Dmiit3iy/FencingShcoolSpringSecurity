@@ -1,6 +1,7 @@
 package org.dmiit3iy.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 
@@ -30,6 +31,7 @@ public class User {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate regDate = LocalDate.now();
-
+    @JsonIgnore
+    @ToString.Exclude
     private List<Role> roleList=new ArrayList<>();
 }

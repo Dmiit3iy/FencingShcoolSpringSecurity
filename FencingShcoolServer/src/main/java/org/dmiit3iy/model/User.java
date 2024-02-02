@@ -33,6 +33,7 @@ public class User {
     private String fio;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @ToString.Exclude
     @Cascade(value = org.hibernate.annotations.CascadeType.DELETE)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
